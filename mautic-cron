@@ -2,9 +2,24 @@
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-*/5  * * * * www-data php /var/www/html/bin/console mautic:segments:update   --quiet >> /var/log/mautic-cron.log 2>&1
-*/5  * * * * www-data php /var/www/html/bin/console mautic:campaigns:trigger --quiet >> /var/log/mautic-cron.log 2>&1
-*/10 * * * * www-data php /var/www/html/bin/console mautic:emails:send       --quiet >> /var/log/mautic-cron.log 2>&1
-*/15 * * * * www-data php /var/www/html/bin/console mautic:messages:send     --quiet >> /var/log/mautic-cron.log 2>&1
-0    * * * * www-data php /var/www/html/bin/console mautic:import            --quiet >> /var/log/mautic-cron.log 2>&1
-
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:segments:update  >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:campaigns:update   >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:campaigns:trigger >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:import >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:emails:send >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:broadcasts:send >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:webhooks:process >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:reports:scheduler >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:maintenance:cleanup --days-old=365 >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:iplookup:download >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:messages:send >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:campaigns:messages >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:campaigns:messagequeue >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:queue:process >> /var/log/mautic_cron.log 2>&1
+*/1 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:segments:check-builders >> /var/log/mautic_cron.log 2>&1
+*/5  * * * * /usr/bin/php /var/www/mautic/bin/console mautic:segments:update      >> /var/log/mautic_segments.log 2>&1
+*/5  * * * * /usr/bin/php /var/www/mautic/bin/console mautic:campaigns:update     >> /var/log/mautic_campaigns_update.log 2>&1
+*/5  * * * * /usr/bin/php /var/www/mautic/bin/console mautic:campaigns:trigger    >> /var/log/mautic_campaigns_trigger.log 2>&1
+*/10 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:emails:send          >> /var/log/mautic_emails.log 2>&1
+*/10 * * * * /usr/bin/php /var/www/mautic/bin/console mautic:import               >> /var/log/mautic_import.log 2>&1
+*/3 * * * /usr/bin/php /var/www/mautic/bin/console mautic:maintenance:cleanup --days-old=365 >> /var/log/mautic_cleanup.log 2>&1

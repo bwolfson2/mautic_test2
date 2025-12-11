@@ -1,3 +1,4 @@
+cat << 'EOF' > /etc/cron.d/mautic-cron
 # /etc/cron.d/mautic-cron
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
@@ -18,3 +19,8 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 */5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:webhooks:process      >> /var/log/mautic_webhooks.log 2>&1
 */5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:queue:process         >> /var/log/mautic_queue.log 2>&1
 */5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:messages:send         >> /var/log/mautic_messages.log 2>&1
+EOF
+
+chmod 644 /etc/cron.d/mautic-cron
+chown root:root /etc/cron.d/mautic-cron
+service cron restart

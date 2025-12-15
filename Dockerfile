@@ -31,10 +31,9 @@ RUN apt-get update \
 
 RUN echo "memory_limit=${PHP_INI_MEMORY_LIMIT}" > /usr/local/etc/php/conf.d/mautic-memory-limit.ini
 
-# Pick ONE of these MPM blocks (see section A)
+# Enforce single Apache MPM (prevents “More than one MPM loaded”)
 RUN a2dismod mpm_event mpm_worker || true \
-    && a2enmod mpm_prefork || true \
-    && apache2ctl -M | grep mpm
+    && a2enmod mpm_prefork || true
 
 COPY mautic-cron /etc/cron.d/mautic-cron
 RUN chmod 0644 /etc/cron.d/mautic-cron

@@ -41,9 +41,5 @@ RUN chmod 0644 /etc/cron.d/mautic-cron
 COPY with-cron-entrypoint.sh /with-cron-entrypoint.sh
 RUN chmod +x /with-cron-entrypoint.sh
 
-COPY fix-apache-mpm.sh /opt/fix-apache-mpm.sh
-RUN chmod +x /opt/fix-apache-mpm.sh
-
-
 ENTRYPOINT ["/with-cron-entrypoint.sh"]
 CMD ["apache2-foreground"]

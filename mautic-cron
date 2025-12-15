@@ -3,18 +3,20 @@ SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Core segment & campaign jobs (every 5 minutes)
-*/5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:segments:update       >> /var/log/mautic_segments.log 2>&1
-*/5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:campaigns:update      >> /var/log/mautic_campaigns_update.log 2>&1
-*/5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:campaigns:trigger     >> /var/log/mautic_campaigns_trigger.log 2>&1
+*/1  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:segments:update       >> /var/log/mautic_segments.log 2>&1
+*/1  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:campaigns:update      >> /var/log/mautic_campaigns_update.log 2>&1
+*/1  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:campaigns:trigger     >> /var/log/mautic_campaigns_trigger.log 2>&1
 
 # Emails & imports
-*/10 * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:emails:send           >> /var/log/mautic_emails.log 2>&1
-*/10 * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:import                >> /var/log/mautic_import.log 2>&1
+*/1 * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:emails:send           >> /var/log/mautic_emails.log 2>&1
+*/1 * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:import                >> /var/log/mautic_import.log 2>&1
 
 # Maintenance & misc
 */3  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:maintenance:cleanup --days-old=365 >> /var/log/mautic_cleanup.log 2>&1
-*/5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:iplookup:download     >> /var/log/mautic_iplookup.log 2>&1
-*/5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:reports:scheduler     >> /var/log/mautic_reports.log 2>&1
-*/5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:webhooks:process      >> /var/log/mautic_webhooks.log 2>&1
-*/5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:queue:process         >> /var/log/mautic_queue.log 2>&1
-*/5  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:messages:send         >> /var/log/mautic_messages.log 2>&1
+*/1  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:iplookup:download     >> /var/log/mautic_iplookup.log 2>&1
+*/1  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:reports:scheduler     >> /var/log/mautic_reports.log 2>&1
+*/1  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:webhooks:process      >> /var/log/mautic_webhooks.log 2>&1
+*/1  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:queue:process         >> /var/log/mautic_queue.log 2>&1
+*/1  * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:messages:send         >> /var/log/mautic_messages.log 2>&1
+*/1 * * * * root /usr/local/bin/php /var/www/html/bin/console doctrine:schema:update --force >> /var/log/mautic_schema_update.log 2>&1
+*/1 * * * * root /usr/local/bin/php /var/www/html/bin/console mautic:custom-field:create-column >> /var/log/mautic_custom_field_column.log 2>&1

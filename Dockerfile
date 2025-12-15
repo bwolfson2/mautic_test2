@@ -19,11 +19,22 @@ ENV MAUTIC_TRUSTED_PROXIES=$MAUTIC_TRUSTED_PROXIES
 ENV MAUTIC_URL=$MAUTIC_URL
 ENV MAUTIC_ADMIN_EMAIL=$MAUTIC_ADMIN_EMAIL
 ENV MAUTIC_ADMIN_PASSWORD=$MAUTIC_ADMIN_PASSWORD
-ENV PHP_INI_DATE_TIMEZONE='UTC'
+ENV PHP_INI_DATE_TIMEZONE=Asia/Jerusalem
+ENV PHP_INI_MEMORY_LIMIT=5000M
+
+ENV PHP_INI_DATE_TIMEZONE=Asia/Jerusalem
+ENV PHP_INI_MEMORY_LIMIT=5000M
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends cron \
     && rm -rf /var/lib/apt/lists/*
+
+RUN echo "memory_limit=${PHP_INI_MEMORY_LIMIT}" > /usr/local/etc/php/conf.d/mautic-memory-limit.ini
+
+# Pick ONE of these MPM blocks (see section A)
+RUN a2dismod mpm_event mpm_worker || true \
+    && a2enmod mpm_prefork || true \
+    && apache2ctl -M | grep mpm
 
 COPY mautic-cron /etc/cron.d/mautic-cron
 RUN chmod 0644 /etc/cron.d/mautic-cron

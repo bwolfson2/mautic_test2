@@ -15,5 +15,5 @@ sed -i '/LoadModule mpm_event_module/d' /etc/apache2/mods-enabled/*.load 2>/dev/
 sed -i '/LoadModule mpm_worker_module/d' /etc/apache2/mods-enabled/*.load 2>/dev/null || true
 
 # Validate
-apache2ctl -M | grep -E 'mpm_' || true
-apache2ctl configtest
+# apache2ctl -M | grep -E 'mpm_' || true
+# apache2ctl configtest

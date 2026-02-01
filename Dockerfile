@@ -1,5 +1,4 @@
-FROM mautic/mautic:latest
-
+FROM mautic/mautic:5.2.9-20251215-fpm
 ARG MAUTIC_DB_HOST
 ARG MAUTIC_DB_PORT
 ARG MAUTIC_DB_USER
